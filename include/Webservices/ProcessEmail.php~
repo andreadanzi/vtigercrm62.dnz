@@ -1,5 +1,5 @@
 <?php
-// danzi.tn@20150525 implementation completed
+
 require_once('data/CRMEntity.php');
 function vtws_process_email($email,$element, $user){
     global $log,$adb,$current_user;
