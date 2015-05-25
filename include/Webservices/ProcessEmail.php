@@ -166,8 +166,12 @@ function vtws_process_email($email,$element, $user){
         {
             if(array_key_exists($key,$contactData))   $newLead->column_fields[$value] = $contactData[$key];
         }
+        $newLead->column_fields['description'] .= "\n".$eventData['subject'];
+        $newLead->column_fields['leadsource'] = $eventData['type'];
+        $newLead->column_fields['rating'] = 'Acquired';
+        $newLead->column_fields['leadstatus'] = 'Pre Qualified';
         $newLead->save($module_name='Leads',$longdesc=false);
-        
+        // Associate Event to New Lead
         $newEvent = CRMEntity::getInstance('Events');
         vtlib_setup_modulevars('Events',$newEvent);
         $newEvent->column_fields['subject'] = $eventData['subject'];
