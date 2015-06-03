@@ -1,5 +1,6 @@
 <?php
 // danzi.tn@20150525 implementation completed
+// danzi.tn@20150603 fix eventData["description"]
 require_once('data/CRMEntity.php');
 function vtws_process_email($email,$element, $user){
     global $log,$adb,$current_user;
@@ -54,7 +55,7 @@ function vtws_process_email($email,$element, $user){
             $newEvent->column_fields['is_all_day_event'] = 0;
             $newEvent->column_fields['eventstatus'] = 'Planned';// $insp_eventstatus 
             $newEvent->column_fields['location'] = $eventData['location'];
-            $newEvent->column_fields['description'] = $event['description'];
+            $newEvent->column_fields['description'] = $eventData['description'];
             $newEvent->save($module_name='Events',$longdesc=false);
     	}
     }
@@ -97,7 +98,7 @@ function vtws_process_email($email,$element, $user){
             $newEvent->column_fields['is_all_day_event'] = 0;
             $newEvent->column_fields['eventstatus'] = 'Planned';// $insp_eventstatus 
             $newEvent->column_fields['location'] = $eventData['location'];
-            $newEvent->column_fields['description'] = $event['description'];
+            $newEvent->column_fields['description'] = $eventData['description'];
             $newEvent->save($module_name='Events',$longdesc=false);
     	}
     }
@@ -136,7 +137,7 @@ function vtws_process_email($email,$element, $user){
             $newEvent->column_fields['is_all_day_event'] = 0;
             $newEvent->column_fields['eventstatus'] = 'Planned';// $insp_eventstatus 
             $newEvent->column_fields['location'] = $eventData['location'];
-            $newEvent->column_fields['description'] = $event['description'];
+            $newEvent->column_fields['description'] = $eventData['description'];
             $newEvent->save($module_name='Events',$longdesc=false);
     	}
     }
@@ -167,6 +168,7 @@ function vtws_process_email($email,$element, $user){
             if(array_key_exists($key,$contactData))   $newLead->column_fields[$value] = $contactData[$key];
         }
         $newLead->column_fields['description'] .= "\n".$eventData['subject'];
+        $newLead->column_fields['description'] .= "\n".$eventData['description'];
         $newLead->column_fields['leadsource'] = $eventData['type'];
         $newLead->column_fields['rating'] = 'Acquired';
         $newLead->column_fields['leadstatus'] = 'Pre Qualified';
@@ -189,7 +191,7 @@ function vtws_process_email($email,$element, $user){
         $newEvent->column_fields['is_all_day_event'] = 0;
         $newEvent->column_fields['eventstatus'] = 'Planned';// $insp_eventstatus 
         $newEvent->column_fields['location'] = $eventData['location'];
-        $newEvent->column_fields['description'] = $event['description'];
+        $newEvent->column_fields['description'] = $eventData['description'];
         $newEvent->save($module_name='Events',$longdesc=false);
         $entityIds['Leads'][] = "10x".$newLead->id;
     }
